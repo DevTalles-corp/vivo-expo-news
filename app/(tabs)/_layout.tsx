@@ -1,37 +1,58 @@
+import { useThemeColor } from '@/presentation/hooks/theme/useThemeColor';
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import React from 'react';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+const TabsLayout = () => {
+  const primaryColor = useThemeColor({}, 'primary');
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-      }}>
+        headerShadowVisible: false,
+        tabBarActiveTintColor: primaryColor,
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="(today)/index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          title: 'Hoy',
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="newspaper-outline" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="news/index"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          title: 'Noticias',
+          tabBarBadge: 3,
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="id-card-outline" color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="sports/index"
+        options={{
+          title: 'Deportes',
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="football-outline" color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="following/index"
+        options={{
+          title: 'Siguiendo',
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="list-outline" color={color} />
           ),
         }}
       />
     </Tabs>
   );
-}
+};
+export default TabsLayout;
